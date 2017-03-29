@@ -1,0 +1,6 @@
+<script src="${ pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
+<script src="${ pageContext.request.contextPath }/assets/js/bootstrap.min.js"></script>
+<script src="${ pageContext.request.contextPath }/assets/js/myscript.js"></script>
+
+</body>
+</html>

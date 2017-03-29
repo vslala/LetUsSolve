@@ -1,0 +1,13 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Let.Us.Solve</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="${ homeIsActive }"><a href="${ pageContext.request.contextPath }/pages/user/dashboard.jsp">Home</a></li>
+      <li class="${ practiceIsActive }"><a href="${ pageContext.request.contextPath }/pages/user/practice.jsp">Practice Test Questions</a></li>
+      <li class="${ quizIsActive }"><a href="${ pageContext.request.contextPath }/pages/user/quiz.jsp">Take Time Quiz</a></li>
+      <li class=""><a href="${ pageContext.request.contextPath }/pages/user/logout.jsp">Logout</a></li>
+    </ul>
+  </div>
+</nav>

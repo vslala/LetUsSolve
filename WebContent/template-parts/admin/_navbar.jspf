@@ -1,0 +1,14 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/pages/admin">Let.Us.Solve</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="${homeIsActive}"><a href="${pageContext.request.contextPath}/pages/admin/dashboard.jsp">Home</a></li>
+      <li class="${questionIsActive}"><a href="${pageContext.request.contextPath}/pages/admin/qna.jsp">Q & A </a></li>
+      <li class=""><a href="${pageContext.request.contextPath}/pages/admin/logout.jsp">Logout</a></li>
+      <li><a href="#">Practice Test</a></li>
+      <li><a href="#">Take Quiz</a></li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,17 @@
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>
+			<c:if test="${ not empty title }">
+				${ title }
+			</c:if>
+		</title>
+		<%@ include file="_styles.jspf" %>
+	</head>
+	
+	<body>
+	
+	<%@ include file="_navbar.jspf" %>
