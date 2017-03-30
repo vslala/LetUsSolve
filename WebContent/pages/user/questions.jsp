@@ -7,7 +7,7 @@
 <%@ page import="java.util.List" %>
 <%
 	DBOps dbOps = new DBOps();
-	String subId = request.getParameter("sub");
+	String subId = request.getParameter("subId");
 	List<Question> questions = dbOps.getAllQuestionsBySubjectId(subId);
 	List<Answer> answersList = dbOps.getAllAnswers();
 	StringBuffer sb = new StringBuffer();
@@ -19,7 +19,6 @@
 			if (q.getqId() == ans.getQ().getqId()) {
 				List<Answer> answers = (List<Answer>)(Object)LetUsSolveUtil.fromJson(ans.getAnswer(), Answer[].class);
 				if (null != answers) {
-					System.out.println("PARSED: " + answers.get(0).getAnswer());
 					sb.append("<ol>");
 					for (Answer a: answers) {
 						sb.append("<li>").append(a.getAnswer()).append("</li>");
@@ -28,16 +27,16 @@
 				}
 				
 			}
-			if (q.getRightAnswer().getAnsId() == ans.getAnsId()) {
-				sb.append("<button type='button' class='btn btn-default' data-toggle='collapse' data-target='#div_id_"+q.getqId()+"'> ")
-					.append("show answer")
-					.append("</button>")
-					.append("<p></p>")
-					.append("<div class='collapse alert alert-success' id='div_id_"+q.getqId()+"'> ")
-					.append("<strong>").append(ans.getAnswer()).append("</strong>")
-					.append("</div>");
-					
-					
+			if (null != q.getRightAnswer()) {
+				if (q.getRightAnswer().getAnsId() == ans.getAnsId()) {
+					sb.append("<button type='button' class='btn btn-default' data-toggle='collapse' data-target='#div_id_"+q.getqId()+"'> ")
+						.append("show answer")
+						.append("</button>")
+						.append("<p></p>")
+						.append("<div class='collapse alert alert-success' id='div_id_"+q.getqId()+"'> ")
+						.append("<strong>").append(ans.getAnswer()).append("</strong>")
+						.append("</div>");
+				}
 			}
 			sb.append("</section>");
 				
@@ -45,37 +44,13 @@
 		sb.append("<hr />");
 	}
 	
-	request.setAttribute("questions", questions);
-	request.setAttribute("view", sb.toString());
-	//request.setAttribute("answers", answers);
-	request.setAttribute("rawAnswers", answersList);
 %>
 
 <div class="container">
 	<div class="row">
 		<div class="col-sm-12">
+			<h2>Subject: :${ param.sub }</h2>
 			<% out.println(sb.toString()); %>
-			<%-- <c:forEach items="${ questions }" var="q">
-				<section class="question-container">
-					<label>${ q.question }</label>
-					<ol>
-					<c:forEach items="${ answers }" var="ans">
-						<c:if test="${ ans.question.qId eq q.qId}">
-							<li>${ ans.answer }</li>
-						</c:if>
-					</c:forEach>
-					</ol>
-					<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#div_id_${ q.qId }">show answer</button><br/>
-					<c:forEach items="${ rawAnswers }" var="ans">
-						<c:if test="${ ans.ansId eq q.rightAnswer.ansId }">
-							<div id="div_id_${ q.qId }" class="collapse alert alert-success">
-								<strong>${ ans.answer }</strong>
-							</div>
-						</c:if>
-					</c:forEach>
-				</section>
-				<hr/>
-			</c:forEach> --%>
 		</div>
 	</div>
 </div>

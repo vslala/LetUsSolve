@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.letussolve.dao.DBOps;
 import com.letussolve.models.User;
+import com.letussolve.utils.LetUsSolveUtil;
 import com.letussolve.utils.PasswordHasher;
 
 /**
@@ -54,16 +56,17 @@ public class LoginController extends HttpServlet {
 			PasswordHasher hasher = new PasswordHasher();
 			System.out.println("Username: " + request.getParameter("username"));
 			System.out.println("User Password: " + request.getParameter("password"));
-			if (hasher.isMatch(request.getParameter("password"), user.getPassword())) {
-				System.out.println("User is Valid!");
-				response.sendRedirect(request.getContextPath() + "/dashboard");
-			} else {
-				System.out.println("User is not valid");
-				response.sendRedirect(request.getContextPath() + "/app?login=fail");
-			}
+			boolean isAuthUser = LetUsSolveUtil.isPasswordMatch(request.getParameter("password"), user.getPassword());
+			if (isAuthUser) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("user", user);
+				response.sendRedirect(request.getContextPath() + "/pages/user/dashboard.jsp");
+				return;
+			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		response.sendRedirect(request.getContextPath() + "/pages/site/home.jsp?login=fail");
 	}
 
 }

@@ -263,15 +263,32 @@ public class DBOps extends DBConnect {
 			Question q = new Question();
 			q.setqId(rs.getInt("id"));
 			q.setQuestion(rs.getString("question"));
-			Answer rightAnswer = new Answer();
-			rightAnswer.setAnsId(rs.getInt("right_answer"));
-			q.setRightAnswer(rightAnswer );
+			System.out.println("RIGHT ANSWER: " + rs.getInt("right_answer"));
+			Answer ans = 0 != rs.getInt("right_answer") ? getAnswerById(rs.getInt("right_answer")) : null;
+			q.setRightAnswer(ans);
 			Subject subject = new Subject();
 			subject.setSubjectId(rs.getInt("subject"));
 			q.setSubject(subject );
 			questions.add(q);
 		}
 		return questions;
+	}
+
+	private Answer getAnswerById(int ansId) throws SQLException {
+		final String METHOD_NAME = "<DBOps::getAnswerById()>";
+		System.out.println(METHOD_NAME);
+		
+		String sql = "SELECT * FROM lus_answers WHERE id=?";
+		stmt = con.prepareStatement(sql);
+		stmt.setInt(1, ansId);
+		ResultSet rs = stmt.executeQuery();
+		Answer answer = null;
+		if (rs.next()) {
+			answer = buildAnswerFromResultSet(rs);
+		}
+		System.out.println("::ANSWER::");
+		System.out.println(answer);
+		return answer;
 	}
 
 	private Question buildQuestionFromResultSet(ResultSet rs) throws SQLException {
@@ -335,15 +352,19 @@ public class DBOps extends DBConnect {
 		stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
-			Answer ans = new Answer();
-			ans.setAnsId(rs.getInt("id"));
-			Question q = new Question();
-			q.setqId(rs.getInt("question_id"));
-			ans.setQ(q );
-			ans.setAnswer(rs.getString("answer"));
-			answers.add(ans);
+			answers.add(buildAnswerFromResultSet(rs));
 		}
 		return answers;
+	}
+
+	private Answer buildAnswerFromResultSet(ResultSet rs) throws SQLException {
+		Answer ans = new Answer();
+		ans.setAnsId(rs.getInt("id"));
+		Question q = new Question();
+		q.setqId(rs.getInt("question_id"));
+		ans.setQ(q );
+		ans.setAnswer(rs.getString("answer"));
+		return ans;
 	}
 	
 	public List<Answer> getAllAnswersByQuestionId(String qId) throws SQLException {
@@ -351,17 +372,12 @@ public class DBOps extends DBConnect {
 		System.out.println(METHOD_NAME);
 		
 		List<Answer> answers = new ArrayList<>();
-		String sql = "SELECT * FROM lus_answers WHERE question_id=?";
+		String sql = "SELECT * FROM lus_answers WHERE question_id=? ORDER BY id ASC";
 		stmt = con.prepareStatement(sql);
 		stmt.setInt(1, Integer.parseInt(qId));
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
-			Answer ans = new Answer();
-			ans.setAnsId(rs.getInt("id"));
-			Question q = new Question();
-			q.setqId(rs.getInt("question_id"));
-			ans.setQ(q );
-			ans.setAnswer(rs.getString("answer"));
+			Answer ans = buildAnswerFromResultSet(rs);
 			answers.add(ans);
 		}
 		return answers;

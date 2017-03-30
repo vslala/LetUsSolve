@@ -1,3 +1,9 @@
+<%
+	if (null != session.getAttribute("user"))
+	{
+		response.sendRedirect(request.getContextPath() + "/pages/user/dashboard.jsp");
+	}
+%>
 <%@ include file="../../template-parts/site/_header.jspf" %>
 		
 

@@ -30,3 +30,13 @@
 	width: 100%;
 	text-align: center;
 }
+.results-view-container {
+	text-align: center;
+	background-color: #222;
+	color: white;
+}
+.phrase {
+	text-align: center;
+	font-size: xx-large;
+	font-weight: bolder;
+}

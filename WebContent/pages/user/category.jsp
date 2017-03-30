@@ -15,7 +15,14 @@
 	<c:forEach items="${ categories }" var="cat">
 		<div class="col-md-4">
 			<section class="box-container">
-				<a href="${ pageContext.request.contextPath }/pages/user/subjects.jsp?catId=${ cat.catId }">
+				<c:choose>
+					<c:when test="${ param.quiz eq true }">
+						<a href="${ pageContext.request.contextPath }/pages/user/subjects.jsp?catId=${ cat.catId }&quiz=true">
+					</c:when>
+					<c:otherwise>
+						<a href="${ pageContext.request.contextPath }/pages/user/subjects.jsp?catId=${ cat.catId }">
+					</c:otherwise>
+				</c:choose>
 					<div class="box">
 						<span class="box-head">${ cat.name }</span><br/>
 						<span class="box-desc">${ cat.description }</span>

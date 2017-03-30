@@ -19,7 +19,15 @@
 		<c:forEach items="${ subjects }" var="sub">
 			<div class="col-md-4">
 			<section class="box-container">
-				<a href="${ pageContext.request.contextPath }/pages/user/questions.jsp?sub=${ sub.subjectId }">
+				<c:choose>
+					<c:when test="${ param.quiz eq true }">
+						<a href="${ pageContext.request.contextPath }/pages/user/quiz.jsp?subId=${ sub.subjectId }&sub=${ sub.name }&quiz=true">
+					</c:when>
+					<c:otherwise>
+						<a href="${ pageContext.request.contextPath }/pages/user/questions.jsp?subId=${ sub.subjectId }&sub=${ sub.name }">
+					</c:otherwise>
+				</c:choose>
+				
 					<div class="box">
 						<span class="box-head">${ sub.name }</span><br/>
 						<span class="box-desc">${ sub.description }</span>
