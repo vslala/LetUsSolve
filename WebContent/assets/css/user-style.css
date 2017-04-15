@@ -46,3 +46,8 @@
 	border: 3px solid #202;
 	border-radius: 50px;
 }
+
+.time {
+	font-size: x-large;
+	font-weight: bolder;
+}

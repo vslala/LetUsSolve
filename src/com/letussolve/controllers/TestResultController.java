@@ -55,8 +55,15 @@ public class TestResultController extends HttpServlet {
 		String[] questions = request.getParameterValues("userQuestion");
 		String[] answers   = request.getParameterValues("userAnswer");
 		
-		if (0 == answers.length) {
+		if (null == answers || 0 == answers.length) {
 			System.out.println(METHOD_NAME + " User did not answer any question");
+			request.setAttribute("totalQuestionsCount", questions.length);
+			request.setAttribute("rightAnswersCount", 0);
+			request.setAttribute("rightAnswers", null);
+			request.setAttribute("wrongAnswers", null);
+			request.setAttribute("percentageCorrect", 0);
+			request.getRequestDispatcher("/pages/user/result.jsp").include(request, response);
+			return;
 		}
 		System.out.println("QUESTIONS COUNT:: " + questions.length);
 //		System.out.println("ANSWERS COUNT:: " + answers.length);
