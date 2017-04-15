@@ -9,10 +9,32 @@
 	DBOps dbOps = new DBOps();
 	List<Question> questions = dbOps.getAllQuestionsBySubjectId(request.getParameter("subId"));
 %>
+<section class="timer pull-right">
+	<div class="timer-container">
+		<div class="time" id="timer"></div>
+	</div>
+	<script>
+		window.onload = function () {
+			console.log("method loaded");
+			var sec = 10;
+			var timer = document.getElementById('timer');
+			var intervalID = setInterval(function() {
+				console.log("Timer Starts: " + sec);
+				sec = sec - 1;
+				timer.innerHTML = sec; 
+				if (sec === 0) {
+					console.log("Timer Stopped");
+					clearInterval(intervalID);
+					document.getElementById('quiz_form').submit();
+				}
+			}, 1000);
+		}
+	</script>
+</section>
 <div class="container">
 	<div class="row">
 		<div class="col-sm-12">
-			<form action="${ pageContext.request.contextPath }/test-result.jsp" method="post">
+			<form action="${ pageContext.request.contextPath }/test-result.jsp" method="post" id="quiz_form">
 		<%
 			out.println("<input name='subId' type='hidden' value='"+request.getParameter("subId")+"' /> ");
 			for (Question q : questions) {

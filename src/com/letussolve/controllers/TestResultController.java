@@ -50,13 +50,16 @@ public class TestResultController extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/pages/site/home.jsp");
 			}
 		}	
-		
+		 
 		String subId 	   = request.getParameter("subId");
 		String[] questions = request.getParameterValues("userQuestion");
 		String[] answers   = request.getParameterValues("userAnswer");
 		
+		if (0 == answers.length) {
+			System.out.println(METHOD_NAME + " User did not answer any question");
+		}
 		System.out.println("QUESTIONS COUNT:: " + questions.length);
-		System.out.println("ANSWERS COUNT:: " + answers.length);
+//		System.out.println("ANSWERS COUNT:: " + answers.length);
 		
 		int numOfRightAnswers = 0;
 		Map<String, String> rightAnswers = new HashMap<>();

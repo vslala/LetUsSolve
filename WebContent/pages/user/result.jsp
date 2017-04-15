@@ -1,6 +1,10 @@
 <% request.setAttribute("quizIsActive", "active"); %>
 <%@ include file="../../template-parts/user/_header.jspf" %>
-
+<script>
+window.location.hash="no-back-button";
+window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
+window.onhashchange=function(){window.location.hash="no-back-button";}
+</script> 
 <div class="container">
 	<div class="row">
 		<div class="col-sm-12">

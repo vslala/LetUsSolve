@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.letussolve.dao.DBOps;
 import com.letussolve.models.User;
+import com.letussolve.utils.PasswordHasher;
 
 /**
  * Servlet implementation class RegisterController
@@ -50,7 +51,7 @@ public class RegisterController extends HttpServlet {
 		user.setEmail(request.getParameter("email"));
 		user.setMobile(request.getParameter("mobile"));
 		user.setUsername(request.getParameter("username"));
-		user.setPassword(request.getParameter("password"));
+		user.setPassword(new PasswordHasher().createHash(request.getParameter("password")));
 		user.setCreatedAt(Calendar.getInstance().getTime());
 		user.setUpdatedAt(Calendar.getInstance().getTime());
 		DBOps dbOps = new DBOps();

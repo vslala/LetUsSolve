@@ -1,3 +1,4 @@
+<%@page import="com.letussolve.models.User"%>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -9,5 +10,11 @@
       <li class="${ quizIsActive }"><a href="${ pageContext.request.contextPath }/pages/user/category.jsp?quiz=true">Take Time Quiz</a></li>
       <li class=""><a href="${ pageContext.request.contextPath }/pages/user/logout.jsp">Logout</a></li>
     </ul>
+    <div class="pull-right">
+    	<%
+    		User user = (User) session.getAttribute("user");
+    		out.println("<label>"+user.getFirstName()+" " + user.getLastName() +"</label>");
+    	%>
+    </div>
   </div>
 </nav>

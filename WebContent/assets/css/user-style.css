@@ -40,3 +40,9 @@
 	font-size: xx-large;
 	font-weight: bolder;
 }
+
+.timer {
+	position: fixed;
+	border: 3px solid #202;
+	border-radius: 50px;
+}
